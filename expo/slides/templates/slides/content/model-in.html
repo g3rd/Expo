@@ -1,0 +1,135 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h2>Integer fields min &amp; max</h2>
+        <p>Validated against backing database</p>
+    </section>
+    <section>
+        <h2>Callable for limiting choices to</h2>
+        <p><code>ForeignKey</code> and <code>ManyToManyField</code></p>
+        <pre><code data-trim contenteditable class="python django">
+def is_available():
+    return {'available_date__lte': datetime.date.utcnow()}
+
+class Pizza(models.Model):
+
+    ...
+
+    toppings = models.ManyToManyField(Topping, limit_choices_to=is_available)
+        </code></pre>
+    </section>
+    <section>
+        <h2>Set default permissions in Model</h2>
+        <pre><code data-trim contenteditable class="python django">
+class Book(models.Model):
+
+    ...
+
+    class Meta:
+        default_permissions = ('add', 'edit', 'delete', 'archive')
+        </code></pre>
+        <aside class="notes">
+            empty list; must be specified on the model before the model is created by migrate in order to prevent any omitted permissions from being created
+        </aside>
+    </section>
+    <section>
+        <h2>update_or_create()</h2>
+        <pre><code data-trim contenteditable class="python django">
+obj, created = Pizza.objects.update_or_create(
+name='Holy Shiitake Pie', price=Decimal(25.95))
+        </code></pre>
+    </section>
+    <section>
+        <h2>The QuerySet</h2>
+        <p>Call custom QuerySet from a Manager</p>
+        <pre><code data-trim contenteditable class="python django">
+class PersonQuerySet(models.QuerySet):
+    def authors(self):
+        return self.filter(role='A')
+
+    def editors(self):
+        return self.filter(role='E')
+
+class PersonManager(models.Manager):
+    def get_queryset(self):
+        return PersonQuerySet(self.model, using=self._db)
+
+    def authors(self):
+        return self.get_queryset().authors()
+
+    def editors(self):
+        return self.get_queryset().editors()
+        </code></pre>
+        <p>Create a Manager from a QuerySet</p>
+        <pre><code data-trim contenteditable class="python django">
+class PersonQuerySet(models.QuerySet):
+    def authors(self):
+        return self.filter(role='A')
+
+    def editors(self):
+        return self.filter(role='E')
+
+class Person(models.Model):
+    ...
+    people = PersonQuerySet.as_manager()
+        </code></pre>
+    </section>
+    <section>
+        <h2>iexact lookup allows None</h2>
+        <p>Generates an <code>IS NULL</code> WHERE clause</p>
+        <pre><code data-trim contenteditable class="python django">
+# SELECT * FROM pizza WHERE location IS NULL;
+pizzas = Pizza.objects.filter(location__iexact=None)
+        </code></pre>
+    </section>
+    <section>
+        <h2>Create custom lookups</h2>
+        <pre><code data-trim contenteditable class="python django">
+pizzas = Pizza.objects.filter(location__mine=True)
+        </code></pre>
+        <p><small>The <a href="https://docs.djangoproject.com/en/1.7/howto/custom-lookups/" target="_blank">Django Docs</a> have great Use Cases and examples</small></p>
+    </section>
+    <section>
+        <h2>Selected related method chainable</h2>
+        <pre><code data-trim contenteditable class="python django">
+pizzas = Pizza.objects.select_related('toppings', 'orders').all()
+
+pizzas = Pizza.objects
+    .select_related('toppings')
+    .select_related('orders')
+    .all()
+        </code></pre>
+    </section>
+    <section>
+        <h2>New prefetch object</h2>
+        <p>Allows for complex prefretch operations; include ordering</p>
+        <pre><code data-trim contenteditable class="python django">
+# Prefretch many-to-many (pre-1.7 = no no)
+Restaurant.objects.prefetch_related('pizzas__toppings')
+
+# With Prefetch() possible
+Restaurant.objects.prefetch_related(Prefetch('pizzas__toppings'))
+
+# Ordering
+Restaurant.objects.prefetch_related(
+    Prefetch('pizzas__toppings',
+             queryset=Toppings.objects.order_by('name')))
+
+# Plus more
+        </code></pre>
+    </section>
+    <section>
+        <h2>Order a relation via _id field</h2>
+        <pre><code data-trim contenteditable class="python django">
+# No Join
+Entry.objects.order_by('blog_id')
+
+# Join
+Entry.objects.order_by('blog__id')
+        </code></pre>
+    </section>
+{% endblock %}

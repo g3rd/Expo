@@ -1,0 +1,19 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+        <h3>Site header, Site title, and Index title</h3>
+        <p>Previously, template override; add to admin.py</p>
+        <pre><code data-trim contenteditable class="python django">
+# Django administration
+admin.site.site_header = "Leo's Pizza"
+
+# Django site admin
+admin.site.site_title = "Leo's Pizza Administration"
+
+# Site administration
+admin.site.index_title = "Administer Leo's Pizza"
+        </code></pre>
+    </section>
+{% endblock %}

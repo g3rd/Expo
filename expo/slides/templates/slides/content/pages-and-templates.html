@@ -1,0 +1,48 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <section>
+            <h1>{{ slide.title }}</h1>
+        </section>
+        <section>
+            <h2>Templates</h2>
+            <p>Hold placeholders</p>
+{% verbatim %}
+            <pre><code data-trim contenteditable class="django">
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block base_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% placeholder hero %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            {% static_placeholder 'featured_all_fronts' %}
+        </div>
+    </div>
+
+    ...
+{% endblock %}
+            </code></pre>
+{% endverbatim %}
+        </section>
+        <section>
+            <h2>Menus</h2>
+{% verbatim %}
+            <pre><code data-trim contenteditable class="django">
+<ul class="nav navbar-nav">
+    {% show_menu 0 1 100 100 %}
+</ul>
+            </code></pre>
+{% endverbatim %}
+            <p><small>Possible to override the HTML output</small></p>
+        </section>
+        <section>
+            <h2>Pages</h2>
+        </section>
+    </section>
+{% endblock %}

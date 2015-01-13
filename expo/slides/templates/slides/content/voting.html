@@ -1,0 +1,52 @@
+{% extends "slides/slide.html" %}
+{% load sekizai_tags staticfiles %}
+
+{% block slide %}
+    <section>
+        <div class="voting-slide">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="row">
+                        <div class="col-xs">
+                            <div id="sequence" class="voting-breadcrumb"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="chart">
+                            <div id="explanation" style="visibility: hidden;">
+                                <span id="percentage"></span><br/> of votes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="voting-legend">
+                        {% for vslide in vote_slides %}
+                            <div class="row legend-item" style="background-color: {{ vslide.processed_color }};">
+                                <span class="col-xs legend-text">{{ vslide.title }}</span>
+                                {% if vslide.votable %}
+                                    <span class="col-xs legend-votes">{{ vslide.votes }} vote{{ vslide.votes|pluralize }}</span>
+                                {% endif %}
+                            </div>
+                            {% if vslide.votable %}
+                                <div class="row legend-item legend-sms-text" style="background-color: {{ vslide.processed_color }};">
+                                    <div class="col-xs">{{ vslide.sms_value }}</div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'lib/css/flexbox.min.css' %}">{% endaddtoblock %}
+    {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'slides/voting.css' %}">{% endaddtoblock %}
+
+    {% addtoblock "js" %}<script type="text/javascript">var votingData = {{ voting_data|safe }};</script>{% endaddtoblock %}
+
+    {% addtoblock "js" %}<script src="http://d3js.org/d3.v3.min.js"></script>{% endaddtoblock %}
+    {% addtoblock "js" %}<script src="{% static 'slides/voting.js' %}"></script>{% endaddtoblock %}
+
+{% endblock %}
+

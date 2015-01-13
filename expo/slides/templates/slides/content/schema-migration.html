@@ -1,0 +1,172 @@
+{% extends "slides/slide.html" %}
+{% load staticfiles %}
+
+{% block slide %}
+    <section>
+        <h1>Schema Migrations</h1>
+        <h3>Goodbye South</h3>
+        <aside class="notes">
+            <ul>
+                <li>it was not possible to alter or remove existing models via the syncdb</li>
+                <li>version control system for your database schema</li>
+            </ul>
+        </aside>
+    </section>
+    <section>
+        <h2>Overview</h2>
+        <ul>
+            <li><code>syncdb</code>, <code>allow_syncdb</code>, <code>pre_syncdb</code>, and <code>post_syncdb</code> deprecated</li>
+            <li><code>makemigrations</code>, <code>migrate</code>, <code>allow_migrate</code>, <code>pre_migrate</code>, and <code>post_migrate</code></li>
+            <li><code>initial_data</code> no longer loaded; use <code>RunPython</code> or <code>RunSQL</code></li>
+            <li>South 1.0 with Django migrations possible</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Leo's Pizza</h2>
+        <h3>A tutorial</h3>
+    </section>
+    <section>
+        <h3 class="no-upper">models.py</h3>
+        <pre><code data-trim contenteditable class="python django">
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+class Pizza(models.Model):
+    name = models.CharField(_('name'), max_length=12)
+
+    class Meta:
+        verbose_name = _('pizza')
+        verbose_name_plural = _('pizzas')
+        </code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py makemigrations</code></h3>
+        <img src="{% static 'slides/content/schema-migration-first-make-migrate.png' %}" class="no-style" alt="First make migration"/>
+    </section>
+    <section>
+        <h3 class="no-upper">0001_initial.py</h3>
+<pre><code data-trim contenteditable class="python django">
+class Migration(migrations.Migration):
+    dependencies = [
+    ]
+    operations = [
+        migrations.CreateModel(
+            name='Pizza',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=12, verbose_name='name')),
+            ],
+            options={
+                'verbose_name': 'pizza',
+                'verbose_name_plural': 'pizzas',
+            },
+            bases=(models.Model,),
+        ),
+    ]
+</code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py migrate</code></h3>
+        <img src="{% static 'slides/content/schema-migration-first-migrate.png' %}" class="no-style" alt="First migrate"/>
+    </section>
+    <section>
+        <h3>New field</h3>
+        <img src="{% static 'slides/content/schema-migration-add-field.png' %}" alt="New Field"/>
+        <pre><code data-trim contenteditable class="python django">
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+class Pizza(models.Model):
+    name = models.CharField(_('name'), max_length=12)
+    price = models.DecimalField(_('price'), max_digits=5, decimal_places=2)
+
+    class Meta:
+        verbose_name = _('pizza')
+        verbose_name_plural = _('pizzas')
+        </code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py makemigrations</code></h3>
+        {# <img src="{% static 'slides/content/schema-migration-second-make-migrate.png' %}" class="no-style" alt="First make migration"/> #}
+        <img src="{% static 'slides/content/schema-migration-second-make-migrate-2.png' %}" class="no-style" alt="Second make migration"/>
+    </section>
+    <section>
+        <h3 class="no-upper">0002_pizza_price.py</h3>
+        <pre><code data-trim contenteditable class="python django">
+class Migration(migrations.Migration):
+    dependencies = [
+        ('pizza', '0001_initial'),
+    ]
+    operations = [
+        migrations.AddField(
+            model_name='pizza',
+            name='price',
+            field=models.DecimalField(default=22.11, verbose_name='price', max_digits=5, decimal_places=2),
+            preserve_default=False,
+        ),
+    ]
+        </code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py migrate</code></h3>
+        <img src="{% static 'slides/content/schema-migration-second-migrate.png' %}" class="no-style" alt="Second migrate"/>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py makemigrations pizza --empty</code></h3>
+        {# <img src="{% static 'slides/content/schema-migration-second-make-migrate.png' %}" class="no-style" alt="First make migration"/> #}
+        <img src="{% static 'slides/content/schema-migration-empty.png' %}" class="no-style" alt="Empty make migration"/>
+    </section>
+    <section>
+        <h3 class="no-upper">0003_auto_20150113_0407.py</h3>
+        <pre><code data-trim contenteditable class="python django">
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('pizza', '0002_pizza_price'),
+    ]
+    operations = [
+    ]
+        </code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper">0003_auto_20150113_0407.py</h3>
+        <pre><code data-trim contenteditable class="python django">
+def raise_price(apps, schema_editor):
+    Pizza = apps.get_model("pizza", "Pizza")
+    for pizza in Pizza.objects.all():
+        pizza.price = pizza.price + pizza.price * Decimal(0.1)
+        pizza.save()
+
+def lower_price(apps, schema_editor):
+    Pizza = apps.get_model("pizza", "Pizza")
+    for pizza in Pizza.objects.all():
+        pizza.price = pizza.price * Decimal(0.90909)
+        pizza.save()
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('pizza', '0002_pizza_price'),
+    ]
+    operations = [
+        migrations.RunPython(raise_price, reverse_code=lower_price),
+    ]
+        </code></pre>
+    </section>
+    <section>
+        <h3 class="no-upper"><code>./manage.py migrate</code></h3>
+        <img src="{% static 'slides/content/schema-migration-data.png' %}" class="no-style" alt="Data migration"/>
+    </section>
+    <section>
+        <h2>Migration rollback</h2>
+        <h3 class="no-upper"><code>./manage.py migrate pizza 0002_pizza_price</code></h3>
+        <img src="{% static 'slides/content/schema-migration-rollback.png' %}" class="no-style" alt="Rollback migration"/>
+    </section>
+    <section>
+        <h2>Notes</h2>
+        <ul>
+            <li><code>syncdb</code> deprecated</li>
+            <li>Manually call <code>createsuperuser</code></li>
+            <li>django.db.models.Fields requires <code>deconstruct()</code></li>
+        </ul>
+    </section>
+{% endblock %}

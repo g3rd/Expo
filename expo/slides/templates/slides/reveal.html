@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load sekizai_tags staticfiles utils %}
+
+{% block page_title %}{{ presentation.title }}{% endblock %}
+{% block additional_head %}{% endblock %}
+
+{% block content %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'css/reveal.min.css' %}">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'css/theme/default.css' %}" id="theme">{% endaddtoblock %}
+{% addtoblock "css" %}<link rel="stylesheet" href="{% static 'lib/css/zenburn.css' %}">{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'lib/js/jquery-2.1.3.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'lib/js/head.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="{% static 'js/reveal.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}
+<script>
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        // transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+        transition: 'linear',
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: '{% static 'lib/js/classList.js' %}', condition: function() { return !document.body.classList; } },
+            { src: '{% static 'plugin/markdown/marked.js' %}', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '{% static 'plugin/markdown/markdown.js' %}', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '{% static 'plugin/highlight/highlight.js' %}', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: '{% static 'plugin/zoom-js/zoom.js' %}', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '{% static 'plugin/notes/notes.js' %}', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+{% endaddtoblock %}
+
+<div class="reveal">
+    <div class="slides">
+        {% block slide_container %}
+            {% for slide in slides %}
+                {% comment %}Need to look and create sub slides if depth = 3{% endcomment %}
+                {% if slide.depth > 2 and slide.numchild > 0 %}
+                    <section>
+                {% endif %}
+
+                {% multi_include "{{ slide.slide_path }}" "slides/content/{{ slide.slug }}.html" "slides/slide.html" with slide=slide %}
+
+                {% if slide.depth > 2 and slide.numchild > 0 %}
+                    {% for sub_slide in slide.get_children %}
+                        {% multi_include "{{ sub_slide.slide_path }}" "slides/content/{{ sub_slide.slug }}.html" "slides/slide.html" with slide=sub_slide %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if slide.depth > 2 and slide.numchild > 0 %}
+                    </section>
+                {% endif %}
+            {% endfor %}
+            <section>
+                <h1>Thank you</h1>
+            </section>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

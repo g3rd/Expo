@@ -1,0 +1,30 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h2 class="no-upper">django.http.JsonResponse</h2>
+        <p>Still can not automatically encode Model objects</p>
+    </section>
+    <section>
+        <h2 class="no-upper">Permission Decorator</h2>
+        <p><code>@permission_required()</code></p>
+        <pre><code data-trim contenteditable class="python django">
+@permission_required('slides.change_presentation')
+def present_draft(request, slug):
+
+    ...
+        </code></pre>
+    </section>
+    <section>
+        <h2 class="no-upper">CurrentSiteMiddleware</h2>
+        <p>Adds <code>site</code> to the <code>request</code></p>
+        <pre><code data-trim contenteditable class="python django">
+def present_draft(request, slug):
+    site = request.site
+    ...
+        </code></pre>
+    </section>
+{% endblock %}

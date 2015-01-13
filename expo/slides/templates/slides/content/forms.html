@@ -1,0 +1,53 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h2>Adding errors</h2>
+        <p>new add_error() method on Form</p>
+        <p>Form._errors is now private</p>
+    </section>
+    <section>
+        <h2 class="no-upper">ValidationError meta data</h2>
+        <p>constructor accepts <code>code</code> and <code>params</code></p>
+        <p><small>new <code>Form.errors.as_json()</code> returns the ErrorList</small></p>
+        <aside class="notes">
+            because of this refactor, public APIs are structured to (mostly) act normally;
+            private APIs will most likely not work as expected
+        </aside>
+    </section>
+    <section>
+        <h2>Radio and checkbox Accessibility</h2>
+        <p><code>RadioSelect</code> and <code>CheckboxSelectMultiple</code></p>
+        <p><code>id</code>, <code>for</code>, and <code>id_for_label</code></p>
+    </section>
+    <section>
+        <h2>Customize blank option</h2>
+        <pre><code data-trim contenteditable class="python django">
+class Pizza(models.Model):
+    size = models.CharField(_('pizza size'), max_length=1, choices=(
+        (None, 'Pick a size'),
+        ('s', 'Small'),
+        ('m', 'Medium'),
+        ('l', 'Large'),
+    ), blank=True, null=True)
+
+    ...
+        </code></pre>
+    </section>
+    <section>
+        <h2>Remove field from a subclassed form</h2>
+        <p>Set the name to <code>None</code></p>
+        <pre><code data-trim contenteditable class="python django">
+class NameForm(RegistrationForm):
+
+    ...
+
+    birthday = None
+
+    ...
+        </code></pre>
+    </section>
+{% endblock %}

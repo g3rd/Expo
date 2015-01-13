@@ -1,0 +1,76 @@
+{% extends "slides/slide.html" %}
+{% load staticfiles %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h2>"Today" and "Now" buttons <br>timezone aware</h2>
+        <img src="{% static 'slides/content/change-list-tz-aware.png' %}" alt="Now and Today buttons"/>
+        <aside class="notes">Before, used browser time.</aside>
+    </section>
+    <section>
+        <h2>Disable links to edit page</h2>
+        <pre><code data-trim contenteditable class="python django">
+class MyModelAdmin(admin.ModelAdmin):
+    ...
+
+    # list_display_links = ('id', )
+    list_display_links = None
+
+    ...
+        </code></pre>
+    </section>
+    <section>
+        <h2>Disable "View on site" button</h2>
+        <img src="{% static 'slides/content/change-list-view-on-site.png' %}" alt="View on site button"/>
+        <pre><code data-trim contenteditable class="python django">
+class MyModelAdmin(admin.ModelAdmin):
+    ...
+
+    view_on_site = False
+
+    ...
+        </code></pre>
+    </section>
+    <section>
+        <h2>Change List order descending <br>for non-db fields</h2>
+        <pre><code data-trim contenteditable class="python django">
+from django.utils.html import format_html
+
+class Pizza(models.Model):
+    name = models.CharField(_('name'), max_length=12)
+    price = models.DecimalField(_('price'), max_digits=5, decimal_places=2)
+
+    def stylized_name(self):
+        if self.price > 20:
+            color = 'red'
+        else:
+            color = 'inherit'
+
+        return format_html('&lt;span style="color: {0};&gt;{1}&lt;/span&gt;', color, self.name)
+    stylized_name.allow_tags = True
+    stylized_name.admin_order_field = '-name'
+
+    ...
+        </code></pre>
+    </section>
+    <section>
+        <h2>Override initial data</h2>
+        <p><code>get_changeform_inital_data()</code></p>
+        <pre><code data-trim contenteditable class="python django">
+class PizzaAdmin(admin.ModelAdmin):
+
+    ...
+
+    def get_changeform_initial_data(self, request):
+        return {'name': 'Plain pizza'}
+
+    ...
+        </code></pre>
+
+        <p>Also available, via URL</p>
+        <pre><code data-trim contenteditable>.../add/?name=Plain+pizza</code></pre>
+    </section>
+{% endblock %}

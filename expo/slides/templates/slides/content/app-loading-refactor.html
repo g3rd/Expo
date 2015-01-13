@@ -1,0 +1,58 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <section>
+            <h1>{{ slide.title }}</h1>
+        </section>
+        <section>
+            <h2>Start-up sequence</h2>
+            <p>app regestry vs. app cache (connected to models)</p>
+            <aside class="notes">
+                <ul>
+                    <li>models.py not required</li>
+                    <li>run code at startup, ready()</li>
+                    <li>application names can be customized</li>
+                    <li>admin automatically calls autodiscover(), remove from urls.py</li>
+                    <li>easier to diagnose import issues</li>
+                </ul>
+            </aside>
+        </section>
+        <section>
+            <h2>Standalone scripts</h2>
+            <p>AppRegistryNotReady exception</p>
+            <pre><code data-trim contenteditable class="python django">
+import django
+django.setup()
+            </code></pre>
+            <aside class="notes">
+                seen in the wild when using testing tools
+            </aside>
+        </section>
+        <section>
+            <h2>WSGI the 1.3 way</h2>
+            <p>AppRegistryNotReady exception</p>
+            <pre><code data-trim contenteditable class="python django">
+# Pre Django 1.4
+import django.core.handlers.wsgi
+application = django.core.handlers.wsgi.WSGIHandler()
+            </code></pre>
+            <pre><code data-trim contenteditable class="python django">
+# Django 1.4+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+            </code></pre>
+            <aside class="notes">
+                seen in the wild when using testing tools
+            </aside>
+        </section>
+        <section>
+            <h2>INSTALLED_APPS importance</h2>
+            <ul>
+                <li>Two apps, same label; use an AppConfig</li>
+                <li>Two apps, same managment command; first in list</li>
+                <li>Session, Authentication, and Message Middleware not automatically added to MIDDLEWARE_CLASSES</li>
+            </ul>
+        </section>
+    </section>
+{% endblock %}

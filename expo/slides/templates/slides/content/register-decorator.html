@@ -1,0 +1,13 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+        <pre><code data-trim contenteditable class="python django">
+@admin.register(Pizza)
+class PizzaAdmin(admin.ModelAdmin):
+    pass
+        </code></pre>
+        <p><small><code>admin.py</code></small></p>
+    </section>
+{% endblock %}

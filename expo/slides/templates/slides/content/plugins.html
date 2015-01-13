@@ -1,0 +1,101 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <section>
+            <h1>{{ slide.title }}</h1>
+        </section>
+        <section>
+            <h2>Common plugins</h2>
+            <ul>
+                <li>File</li>
+                <li>Flash</li>
+                <li>Picture</li>
+                <li>Teaser</li>
+                <li>Text</li>
+                <li>Video</li>
+                <li>Inhert</li>
+                <li>CMS Plugin Filer &ndash; file management<ul>
+                    <li>file</li>
+                    <li>folder</li>
+                    <li>image</li>
+                    <li>teaser</li>
+                    <li>video</li>
+                </ul></li>
+            </ul>
+        </section>
+        <section>
+            <h2>Custom plugins</h2>
+            <p>Standard Django app</p>
+        </section>
+        <section>
+            <h2>Model</h2>
+            <p><code>models.py</code></p>
+            <pre><code data-trim contenteditable class="python django">
+from django.db import models
+from cms.models import CMSPlugin
+from polls.models import Poll
+
+...
+
+class PollPlugin(CMSPlugin):
+    poll = models.ForeignKey(Poll)
+
+    def __unicode__(self):
+        return self.poll.question
+            </code></pre>
+        </section>
+        <section>
+            <h2>Plugin Class</h2>
+            <p><code>cms_plugins.py</code></p>
+            <pre><code data-trim contenteditable class="python django">
+from cms.plugin_base import CMSPluginBase
+from cms.plugin_pool import plugin_pool
+from polls_plugin.models import PollPlugin
+from django.utils.translation import ugettext as _
+
+class CMSPollPlugin(CMSPluginBase):
+    model = PollPlugin
+    module = _("Polls")
+    name = _("Poll Plugin")
+    render_template = "djangocms_polls/poll_plugin.html"
+
+    def render(self, context, instance, placeholder):
+        context.update({'instance': instance})
+        return context
+
+plugin_pool.register_plugin(CMSPollPlugin)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Plugin Class</h2>
+            <p><code>cms_plugins.py</code></p>
+            <pre><code data-trim contenteditable class="python django">
+{% verbatim %}
+<h1>{{ instance.poll.question }}</h1>
+
+<form action="{% url 'polls:vote' instance.poll.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in instance.poll.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}"
+            value="{{ choice.id }}" />
+        <label for="choice{{ forloop.counter }}">
+            {{ choice.choice_text }}
+        </label><br />
+    {% endfor %}
+    <input type="submit" value="Vote" />
+</form>
+{% endverbatim %}
+            </code></pre>
+        </section>
+        <section>
+            <h2>Finish up</h2>
+            <ol>
+                <li>Add to <code>INSTALLED_APPS</code></li>
+                <li><code>makemigrations</code></li>
+                <li><code>migrate</code></li>
+                <li>Add the Polls Plugin to a page</li>
+            </ol>
+        </section>
+    </section>
+{% endblock %}

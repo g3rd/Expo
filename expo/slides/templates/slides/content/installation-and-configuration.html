@@ -1,0 +1,142 @@
+{% extends "slides/slide.html" %}
+{% load staticfiles %}
+
+{% block slide %}
+    <section>
+        <section>
+            <h1>{{ slide.title }}</h1>
+        </section>
+        <section>
+            <h2>Installer</h2>
+            <p>Does not support Django 1.6 or 1.7</p>
+            <pre><code data-trim contenteditable class="bash">
+pip install --upgrade virtualenv
+virtualenv env
+source env/bin/activate
+pip install djangocms-installer
+djangocms -p . { project name }
+            </code></pre>
+        </section>
+        <section>
+            <h2>Install from scratch</h2>
+            <p>Or add it existing project</p>
+            <pre><code data-trim contenteditable class="python django">
+INSTALLED_APPS ~= (
+    'cms',
+    'mptt',  # utilities for implementing a tree
+    'menus',  # helper website navigation
+    'sekizai',  # for javascript and css management
+    'djangocms_admin_style',  # for the admin skin. must be before admin
+    'django.contrib.admin',
+    'django.contrib.messages',
+    # Plus any plugins
+)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Migrations</h2>
+            <p>South dragging us down</p>
+            <pre><code data-trim contenteditable class="python django">
+MIGRATION_MODULES = {
+    'cms': 'cms.migrations_django',
+    'menus': 'menus.migrations_django',
+
+    # Add also the following modules if you're using these plugins:
+    'djangocms_file': 'djangocms_file.migrations_django',
+    'djangocms_flash': 'djangocms_flash.migrations_django',
+    'djangocms_googlemap': 'djangocms_googlemap.migrations_django',
+    'djangocms_inherit': 'djangocms_inherit.migrations_django',
+    'djangocms_link': 'djangocms_link.migrations_django',
+    'djangocms_picture': 'djangocms_picture.migrations_django',
+    'djangocms_snippet': 'djangocms_snippet.migrations_django',
+    'djangocms_teaser': 'djangocms_teaser.migrations_django',
+    'djangocms_video': 'djangocms_video.migrations_django',
+    'djangocms_text_ckeditor': 'djangocms_text_ckeditor.migrations_django',
+}
+            </code></pre>
+            <p><small><super>*</super> Django CMS 1.8 will remove this step</small></p>
+        </section>
+        <section>
+            <h2>Adjust Middleware Classes</h2>
+            <pre><code data-trim contenteditable class="python django">
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
+)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Template context processors</h2>
+            <pre><code data-trim contenteditable class="python django">
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
+)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Define templates</h2>
+            <pre><code data-trim contenteditable class="python django">
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "templates", "cms"),
+    os.path.join(BASE_DIR, "templates"),
+)
+
+CMS_TEMPLATES = (
+    ('front.html', 'Front'),
+    ('story.html', 'Story'),
+    ('one-column.html', 'One column'),
+)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Include URLs</h2>
+            <pre><code data-trim contenteditable class="python django">
+import cms
+from django.conf.urls import include, url, patterns
+from django.conf.urls.i18n import i18n_patterns
+from django.contrib import admin
+from django.views.generic.base import RedirectView
+
+urlpatterns = patterns('',
+    url(r'^$', RedirectView.as_view(url='/en/', permanent=True), name='index'),
+)
+
+urlpatterns += i18n_patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include(cms.urls)),
+)
+            </code></pre>
+        </section>
+        <section>
+            <h2>Migrate, check, run</h2>
+            <pre><code data-trim contenteditable class="bash">
+./manage.py migrate
+./manage.py createsuperuser
+            </code></pre>
+            <pre><code data-trim contenteditable class="bash">./manage.py cms check</code></pre>
+            <pre><code data-trim contenteditable class="bash">./manage.py runserver</code></pre>
+        </section>
+        <section>
+            <img src="{% static 'slides/content/welcome-to-django-cms.png' %}" alt="Success" class="no-style"/>
+            <aside class="notes">
+                Templates need to be created before this works.
+            </aside>
+        </section>
+    </section>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <section>
+            <h1>{{ slide.title }}</h1>
+        </section>
+        <section>
+            <h2>This.</h2>
+            <pre><code data-trim contenteditable class="python django">
+$ ./manage.py runserver
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/mp_tree.py:102: RemovedInDjango18Warning: `MP_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class MP_NodeManager(models.Manager):
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/al_tree.py:35: RemovedInDjango18Warning: `AL_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class AL_NodeManager(models.Manager):
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/django/forms/widgets.py:143: RemovedInDjango18Warning: `TreeAdmin.queryset` method should be renamed `get_queryset`.
+  .__new__(mcs, name, bases, attrs))
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/ns_tree.py:104: RemovedInDjango18Warning: `NS_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class NS_NodeManager(models.Manager):
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/mp_tree.py:102: RemovedInDjango18Warning: `MP_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class MP_NodeManager(models.Manager):
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/al_tree.py:35: RemovedInDjango18Warning: `AL_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class AL_NodeManager(models.Manager):
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/django/forms/widgets.py:143: RemovedInDjango18Warning: `TreeAdmin.queryset` method should be renamed `get_queryset`.
+  .__new__(mcs, name, bases, attrs))
+
+/Users/g3rd/Projects/expo/lib/python2.7/site-packages/treebeard/ns_tree.py:104: RemovedInDjango18Warning: `NS_NodeManager.get_query_set` method should be renamed `get_queryset`.
+  class NS_NodeManager(models.Manager):
+
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 13, 2015 - 05:45:33
+Django version 1.7.1, using settings 'expo.settings.base'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+            </code></pre>
+        </section>
+        <section>
+            <h2>Default checks</h2>
+            <ul>
+                <li>models</li>
+                <li>signals</li>
+                <li>admin</li>
+                <li>compatibility</li>
+            </ul>
+        </section>
+    </section>
+{% endblock %}

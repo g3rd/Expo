@@ -1,0 +1,18 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h2>time Filter</h2>
+        <p><code>|time:"TIME FORMAT"</code> is now time-zone-aware</p>
+        <aside class="notes">
+            pytz may need installed if doing dates before 1970 or after 2037
+        </aside>
+    </section>
+    <section>
+        <h2>New truncate chars with HTML Filter</h2>
+        <p><code>|truncatechars_html:9</code>, aware of HTML tags</p>
+    </section>
+{% endblock %}

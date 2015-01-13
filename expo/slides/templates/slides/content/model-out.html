@@ -1,0 +1,21 @@
+{% extends "slides/slide.html" %}
+
+{% block slide %}
+    <section>
+        <h1>{{ slide.title }}</h1>
+    </section>
+    <section>
+        <h1 style="text-transform: none;"><strike>IPAddressField</strike></h1>
+        <p>models.IPAddressField and forms.IPAddressField</p>
+        <p>django.db.models.GenericIPAddressField and django.db.forms.GenericIPAddressField</p>
+    </section>
+    <section>
+        <h2>The "<strike>select for update</strike>" method <br>requires a transaction</h2>
+        <p>Previously, worked in autocommit mode</p>
+        <aside class="notes">
+            Django 1.6 introduced database-level autocommit.
+            &lt; Django 1.6, automatic transactions mode allowed this to be used to lock records until the next write.
+            Assumes to be an error, throws exception.
+        </aside>
+    </section>
+{% endblock %}

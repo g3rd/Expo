@@ -1,0 +1,41 @@
+#chart {
+    height: 75vh;
+    width: 100%;
+}
+
+#explanation {
+    display: none !important;
+}
+
+.voting-slide .voting-legend {
+    font-size: 20px;
+    line-height: 20px;
+    padding-left: 1vw;
+}
+
+.voting-legend > .legend-item,
+.voting-legend > .legend-text,
+.voting-legend > .legend-sms-text {
+    font-size: 15px;
+    line-height: 15px;
+    padding: 3px;
+    text-align: left;
+}
+
+.voting-legend > .legend-header {
+    text-align: center;
+}
+
+.voting-legend > .legend-header {
+
+}
+
+.voting-legend > .legend-item .legend-votes {
+    text-align: right;
+}
+
+.overview .voting-legend,
+.overview #explanation,
+.overview #sequence {
+    display: none !important;
+}
