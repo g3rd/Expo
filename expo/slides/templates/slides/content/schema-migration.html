@@ -106,6 +106,7 @@ class Migration(migrations.Migration):
         ),
     ]
         </code></pre>
+        <aside class="notes">preserve_default argument indicates whether the field’s default value is permanent and should be baked into the project state (True), or if it is temporary and just for this migration (False)</aside>
     </section>
     <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py migrate</code></h3>
