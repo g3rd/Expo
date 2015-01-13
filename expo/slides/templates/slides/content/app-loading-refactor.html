@@ -2,10 +2,10 @@
 
 {% block slide %}
     <section>
-        <section>
+        <section data-state="django-background">
             <h1>{{ slide.title }}</h1>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>Start-up sequence</h2>
             <p>app regestry vs. app cache (connected to models)</p>
             <aside class="notes">
@@ -18,7 +18,7 @@
                 </ul>
             </aside>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>Standalone scripts</h2>
             <p>AppRegistryNotReady exception</p>
             <pre><code data-trim contenteditable class="python django">
@@ -29,7 +29,7 @@ django.setup()
                 seen in the wild when using testing tools
             </aside>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>WSGI the 1.3 way</h2>
             <p>AppRegistryNotReady exception</p>
             <pre><code data-trim contenteditable class="python django">
@@ -46,7 +46,7 @@ application = get_wsgi_application()
                 seen in the wild when using testing tools
             </aside>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>INSTALLED_APPS importance</h2>
             <ul>
                 <li>Two apps, same label; use an AppConfig</li>

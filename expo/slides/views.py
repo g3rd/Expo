@@ -1,8 +1,9 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 from django.contrib.auth.decorators import permission_required
 from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.clickjacking import xframe_options_exempt
 from slides.models import State, Presentation, Slide
 
 
@@ -25,9 +26,11 @@ def _voting_data(vote_slides):
         voting_data['children'].append(slide.to_jsonable_python_object())
     return JsonResponse(voting_data, safe=False).content
 
+@xframe_options_exempt
 def present(request, slug):
+    print("PRESENT")
     try:
-        presentation = Presentation.draft.get(slug=slug)
+        presentation = Presentation.published.get(slug=slug)
     except Presentation.DoesNotExist:
         raise Http404
 
@@ -51,7 +54,9 @@ def present(request, slug):
 
 
 @permission_required('slides.change_presentation')
+@xframe_options_exempt
 def present_draft(request, slug):
+    print("DRAFT")
     try:
         presentation = Presentation.draft.get(slug=slug)
     except Presentation.DoesNotExist:

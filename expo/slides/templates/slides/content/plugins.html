@@ -2,10 +2,10 @@
 
 {% block slide %}
     <section>
-        <section>
+        <section data-state="djangocms-background">
             <h1>{{ slide.title }}</h1>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Common plugins</h2>
             <ul>
                 <li>File</li>
@@ -24,11 +24,11 @@
                 </ul></li>
             </ul>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Custom plugins</h2>
             <p>Standard Django app</p>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Model</h2>
             <p><code>models.py</code></p>
             <pre><code data-trim contenteditable class="python django">
@@ -45,7 +45,7 @@ class PollPlugin(CMSPlugin):
         return self.poll.question
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Plugin Class</h2>
             <p><code>cms_plugins.py</code></p>
             <pre><code data-trim contenteditable class="python django">
@@ -67,7 +67,7 @@ class CMSPollPlugin(CMSPluginBase):
 plugin_pool.register_plugin(CMSPollPlugin)
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Plugin Class</h2>
             <p><code>cms_plugins.py</code></p>
             <pre><code data-trim contenteditable class="python django">
@@ -88,7 +88,7 @@ plugin_pool.register_plugin(CMSPollPlugin)
 {% endverbatim %}
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Finish up</h2>
             <ol>
                 <li>Add to <code>INSTALLED_APPS</code></li>

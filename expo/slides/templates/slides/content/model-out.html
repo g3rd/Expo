@@ -1,15 +1,15 @@
 {% extends "slides/slide.html" %}
 
 {% block slide %}
-    <section>
+    <section data-state="django-background">
         <h1>{{ slide.title }}</h1>
     </section>
-    <section>
+    <section data-state="django-background">
         <h1 style="text-transform: none;"><strike>IPAddressField</strike></h1>
         <p>models.IPAddressField and forms.IPAddressField</p>
         <p>django.db.models.GenericIPAddressField and django.db.forms.GenericIPAddressField</p>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>The "<strike>select for update</strike>" method <br>requires a transaction</h2>
         <p>Previously, worked in autocommit mode</p>
         <aside class="notes">

@@ -69,7 +69,7 @@ class Presentation(TimeStampedModel, StatusModel):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        super(Slide, self).save(*args, **kwargs)
+        super(Presentation, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('presentation')

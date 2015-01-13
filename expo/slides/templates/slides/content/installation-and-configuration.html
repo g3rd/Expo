@@ -2,11 +2,11 @@
 {% load staticfiles %}
 
 {% block slide %}
-    <section>
-        <section>
+    <section data-state="djangocms-background">
+        <section data-state="djangocms-background">
             <h1>{{ slide.title }}</h1>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Installer</h2>
             <p>Does not support Django 1.6 or 1.7</p>
             <pre><code data-trim contenteditable class="bash">
@@ -17,7 +17,7 @@ pip install djangocms-installer
 djangocms -p . { project name }
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Install from scratch</h2>
             <p>Or add it existing project</p>
             <pre><code data-trim contenteditable class="python django">
@@ -33,7 +33,7 @@ INSTALLED_APPS ~= (
 )
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Migrations</h2>
             <p>South dragging us down</p>
             <pre><code data-trim contenteditable class="python django">
@@ -56,7 +56,7 @@ MIGRATION_MODULES = {
             </code></pre>
             <p><small><super>*</super> Django CMS 1.8 will remove this step</small></p>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Adjust Middleware Classes</h2>
             <pre><code data-trim contenteditable class="python django">
 MIDDLEWARE_CLASSES = (
@@ -74,7 +74,7 @@ MIDDLEWARE_CLASSES = (
 )
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Template context processors</h2>
             <pre><code data-trim contenteditable class="python django">
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -89,7 +89,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Define templates</h2>
             <pre><code data-trim contenteditable class="python django">
 TEMPLATE_DIRS = (
@@ -104,7 +104,7 @@ CMS_TEMPLATES = (
 )
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Include URLs</h2>
             <pre><code data-trim contenteditable class="python django">
 import cms
@@ -123,7 +123,7 @@ urlpatterns += i18n_patterns('',
 )
             </code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Migrate, check, run</h2>
             <pre><code data-trim contenteditable class="bash">
 ./manage.py migrate
@@ -132,8 +132,9 @@ urlpatterns += i18n_patterns('',
             <pre><code data-trim contenteditable class="bash">./manage.py cms check</code></pre>
             <pre><code data-trim contenteditable class="bash">./manage.py runserver</code></pre>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <img src="{% static 'slides/content/welcome-to-django-cms.png' %}" alt="Success" class="no-style"/>
+            <p><small><a href="http://localhost:8001">Local site</a></small></p>
             <aside class="notes">
                 Templates need to be created before this works.
             </aside>

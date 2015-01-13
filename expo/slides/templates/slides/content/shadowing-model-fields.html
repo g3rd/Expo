@@ -1,11 +1,11 @@
 {% extends "slides/slide.html" %}
 
 {% block slide %}
-    <section>
+    <section data-state="django-background">
         <h1>{{ slide.title }}</h1>
         <h2>What?!?</h2>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3>Multiple inheritance &amp; clashing id fields</h3>
         <pre><code data-trim contenteditable class="python django">
 class Article(models.Model):
@@ -19,7 +19,7 @@ class BookReview(Book, Article):
     pass
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3>There are solutions!</h3>
         <p>Use an explict AutoField</p>
         <pre><code data-trim contenteditable class="python django">

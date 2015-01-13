@@ -2,45 +2,45 @@
 
 {% block slide %}
     <section>
-        <section>
+        <section data-state="django-background">
             <h1>{{ slide.title }}</h1>
         </section>
         <!-- Remove and add -->
-        <section>
+        <section data-state="django-background">
             <h1><strike>2.6</strike> 3.4</h1>
             <h2>Python version</h2>
         </section>
         <!-- Remove -->
-        <section>
+        <section data-state="django-background">
             <h1><strike>&lt;3.1</strike></h1>
             <h2>GEOS support</h2>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2 class="no-upper"><strike>django.utils.simplejson</strike></h2>
         </section>
         <!-- Deprecated -->
-        <section>
+        <section data-state="django-background">
             <h2>Geo Sitemaps</h2>
             <p>Deprecated, removed in Django 1.8</p>
             <aside class="notes">Google has retired support for the Geo Sitemaps format.</aside>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2 class="no-upper">./manage.py syncdb</h1>
             <p>Deprecated, removed in Django 1.9</p>
             <pre><code data-trim contenteditable class="bash">./manage.py makemigrations
 ./manage.py migrate</code></pre>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2 class="no-upper">./manage.py validate</h1>
             <p>Deprecated</p>
             <pre><code data-trim contenteditable class="bash">./manage.py check</code></pre>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2 class="no-upper">./manage.py runfcgi</h2>
             <p>Deprecated, removed in Django 1.9</p>
         </section>
         <!-- New -->
-        <section>
+        <section data-state="django-background">
             <h2>Development Server</h2>
             <p>All HTTP requests are logged</p>
         </section>

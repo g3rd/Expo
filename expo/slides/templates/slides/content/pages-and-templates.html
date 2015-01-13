@@ -2,10 +2,10 @@
 
 {% block slide %}
     <section>
-        <section>
+        <section data-state="djangocms-background">
             <h1>{{ slide.title }}</h1>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Templates</h2>
             <p>Hold placeholders</p>
 {% verbatim %}
@@ -30,7 +30,7 @@
             </code></pre>
 {% endverbatim %}
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Menus</h2>
 {% verbatim %}
             <pre><code data-trim contenteditable class="django">
@@ -41,8 +41,9 @@
 {% endverbatim %}
             <p><small>Possible to override the HTML output</small></p>
         </section>
-        <section>
+        <section data-state="djangocms-background">
             <h2>Pages</h2>
+            <p><a href="http://localhost:8001">Local Site</a></p>
         </section>
     </section>
 {% endblock %}

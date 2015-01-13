@@ -1,11 +1,11 @@
 {% extends "slides/slide.html" %}
 
 {% block slide %}
-    <section>
-        <section>
+    <section data-state="django-background">
+        <section data-state="django-background">
             <h1>{{ slide.title }}</h1>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>This.</h2>
             <pre><code data-trim contenteditable class="python django">
 $ ./manage.py runserver
@@ -42,7 +42,7 @@ Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
             </code></pre>
         </section>
-        <section>
+        <section data-state="django-background">
             <h2>Default checks</h2>
             <ul>
                 <li>models</li>

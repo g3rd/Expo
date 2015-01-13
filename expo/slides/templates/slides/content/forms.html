@@ -1,15 +1,15 @@
 {% extends "slides/slide.html" %}
 
 {% block slide %}
-    <section>
+    <section data-state="django-background">
         <h1>{{ slide.title }}</h1>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Adding errors</h2>
         <p>new add_error() method on Form</p>
         <p>Form._errors is now private</p>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2 class="no-upper">ValidationError meta data</h2>
         <p>constructor accepts <code>code</code> and <code>params</code></p>
         <p><small>new <code>Form.errors.as_json()</code> returns the ErrorList</small></p>
@@ -18,12 +18,12 @@
             private APIs will most likely not work as expected
         </aside>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Radio and checkbox Accessibility</h2>
         <p><code>RadioSelect</code> and <code>CheckboxSelectMultiple</code></p>
         <p><code>id</code>, <code>for</code>, and <code>id_for_label</code></p>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Customize blank option</h2>
         <pre><code data-trim contenteditable class="python django">
 class Pizza(models.Model):
@@ -37,7 +37,7 @@ class Pizza(models.Model):
     ...
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Remove field from a subclassed form</h2>
         <p>Set the name to <code>None</code></p>
         <pre><code data-trim contenteditable class="python django">

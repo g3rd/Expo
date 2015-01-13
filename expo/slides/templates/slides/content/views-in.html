@@ -1,14 +1,14 @@
 {% extends "slides/slide.html" %}
 
 {% block slide %}
-    <section>
+    <section data-state="django-background">
         <h1>{{ slide.title }}</h1>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2 class="no-upper">django.http.JsonResponse</h2>
         <p>Still can not automatically encode Model objects</p>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2 class="no-upper">Permission Decorator</h2>
         <p><code>@permission_required()</code></p>
         <pre><code data-trim contenteditable class="python django">
@@ -18,7 +18,7 @@ def present_draft(request, slug):
     ...
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2 class="no-upper">CurrentSiteMiddleware</h2>
         <p>Adds <code>site</code> to the <code>request</code></p>
         <pre><code data-trim contenteditable class="python django">

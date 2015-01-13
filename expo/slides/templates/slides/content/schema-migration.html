@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block slide %}
-    <section>
+    <section data-state="django-background">
         <h1>Schema Migrations</h1>
         <h3>Goodbye South</h3>
         <aside class="notes">
@@ -12,7 +12,7 @@
             </ul>
         </aside>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Overview</h2>
         <ul>
             <li><code>syncdb</code>, <code>allow_syncdb</code>, <code>pre_syncdb</code>, and <code>post_syncdb</code> deprecated</li>
@@ -21,11 +21,11 @@
             <li>South 1.0 with Django migrations possible</li>
         </ul>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Leo's Pizza</h2>
         <h3>A tutorial</h3>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper">models.py</h3>
         <pre><code data-trim contenteditable class="python django">
 from django.db import models
@@ -39,11 +39,11 @@ class Pizza(models.Model):
         verbose_name_plural = _('pizzas')
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py makemigrations</code></h3>
         <img src="{% static 'slides/content/schema-migration-first-make-migrate.png' %}" class="no-style" alt="First make migration"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper">0001_initial.py</h3>
 <pre><code data-trim contenteditable class="python django">
 class Migration(migrations.Migration):
@@ -65,11 +65,11 @@ class Migration(migrations.Migration):
     ]
 </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py migrate</code></h3>
         <img src="{% static 'slides/content/schema-migration-first-migrate.png' %}" class="no-style" alt="First migrate"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3>New field</h3>
         <img src="{% static 'slides/content/schema-migration-add-field.png' %}" alt="New Field"/>
         <pre><code data-trim contenteditable class="python django">
@@ -85,12 +85,12 @@ class Pizza(models.Model):
         verbose_name_plural = _('pizzas')
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py makemigrations</code></h3>
         {# <img src="{% static 'slides/content/schema-migration-second-make-migrate.png' %}" class="no-style" alt="First make migration"/> #}
         <img src="{% static 'slides/content/schema-migration-second-make-migrate-2.png' %}" class="no-style" alt="Second make migration"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper">0002_pizza_price.py</h3>
         <pre><code data-trim contenteditable class="python django">
 class Migration(migrations.Migration):
@@ -107,16 +107,16 @@ class Migration(migrations.Migration):
     ]
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py migrate</code></h3>
         <img src="{% static 'slides/content/schema-migration-second-migrate.png' %}" class="no-style" alt="Second migrate"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py makemigrations pizza --empty</code></h3>
         {# <img src="{% static 'slides/content/schema-migration-second-make-migrate.png' %}" class="no-style" alt="First make migration"/> #}
         <img src="{% static 'slides/content/schema-migration-empty.png' %}" class="no-style" alt="Empty make migration"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper">0003_auto_20150113_0407.py</h3>
         <pre><code data-trim contenteditable class="python django">
 class Migration(migrations.Migration):
@@ -128,7 +128,7 @@ class Migration(migrations.Migration):
     ]
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper">0003_auto_20150113_0407.py</h3>
         <pre><code data-trim contenteditable class="python django">
 def raise_price(apps, schema_editor):
@@ -152,16 +152,16 @@ class Migration(migrations.Migration):
     ]
         </code></pre>
     </section>
-    <section>
+    <section data-state="django-background">
         <h3 class="no-upper"><code>./manage.py migrate</code></h3>
         <img src="{% static 'slides/content/schema-migration-data.png' %}" class="no-style" alt="Data migration"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Migration rollback</h2>
         <h3 class="no-upper"><code>./manage.py migrate pizza 0002_pizza_price</code></h3>
         <img src="{% static 'slides/content/schema-migration-rollback.png' %}" class="no-style" alt="Rollback migration"/>
     </section>
-    <section>
+    <section data-state="django-background">
         <h2>Notes</h2>
         <ul>
             <li><code>syncdb</code> deprecated</li>
